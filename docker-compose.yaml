@@ -48,6 +48,36 @@ services:
     - /var/run:/var/run:rw
     - /sys:/sys:ro
     - /var/lib/docker/:/var/lib/docker:ro
+  
+  loki:
+    image: grafana/loki:3.5.8
+    ports:
+      - 3100:3100
+    volumes:
+      - ./loki-config.yaml:/etc/loki/loki-config.yaml
+      
+  promtail:
+    image: grafana/promtail:3.5.8
+    volumes:
+      - ./promtail-config.yaml:/etc/promtail/promtail-config.yaml
+
+  tempo:
+    image: grafana/tempo:2.9.0
+    command: [ "-config.file=/etc/tempo.yaml" ]
+    volumes:
+      - ./tempo.yaml:/etc/tempo.yaml
+    ports:
+      - 4100:4100
+
+  otel-collector:
+    image: otel/opentelemetry-collector:0.139.0
+    command: [ "--config=/etc/otel-collector.yaml" ]
+    network_mode: host
+    volumes:
+      - ./otel-collector.yaml:/etc/otel-collector.yaml
+    ports:
+      - 4317:4317
+      - 4318:4318
 
 volumes:
   grafana:

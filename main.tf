@@ -35,6 +35,27 @@ resource "grafana_data_source" "prometheus" {
   })
 }
 
+resource "grafana_data_source" "loki" {
+  type              = "loki"
+  name              = "loki"
+  url               = "http://loki:3100"
+  json_data_encoded = jsonencode({})
+}
+
+
+resource "grafana_data_source" "tempo" {
+  type = "tempo"
+  name = "tempo"
+  url  = "http://tempo:4100"
+  json_data_encoded = jsonencode({
+    streamingEnabled = {
+      search  = true
+      metrics = true
+    }
+  })
+}
+
+
 
 data "local_file" "grafana_dashboard_node_exporter" {
   filename = "${path.module}/grafana/dashboards/node-export-full.json"
@@ -51,4 +72,5 @@ data "local_file" "grafana_dashboard_docker_containers" {
 resource "grafana_dashboard" "docker_containers" {
   config_json = data.local_file.grafana_dashboard_docker_containers.content
 }
+
 
