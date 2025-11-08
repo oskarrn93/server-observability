@@ -1,0 +1,43 @@
+version: "3.3"
+services:
+  grafana:
+    image: grafana/grafana:12.2.1
+    container_name: grafana
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: grafana
+        target: /var/lib/grafana
+    ports:
+      - 3200:3000
+
+  prometheus:
+    image: prom/prometheus:v3.7.3
+    container_name: prometheus
+    restart: unless-stopped
+    volumes:
+      - type: volume
+        source: prometheus
+        target: /prometheus
+      - './prometheus.yaml:/prometheus.yaml:ro'
+    command:
+      - '--config.file=/prometheus.yaml'
+    ports:
+      - 9090:9090
+  
+  node_exporter:
+    image: prom/node-exporter:v1.10.2
+    container_name: node_exporter
+    command:
+      - '--path.rootfs=/host'
+    pid: host
+    restart: unless-stopped
+    volumes:
+      - '/:/host:ro,rslave'
+    ports:
+      - 9100:9100
+
+
+volumes:
+  grafana:
+  prometheus:
