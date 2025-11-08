@@ -37,6 +37,16 @@ services:
     ports:
       - 9100:9100
 
+  cadvisor:
+    image: gcr.io/cadvisor/cadvisor:v0.52.0
+    container_name: cadvisor
+    ports:
+    - 8084:8080
+    volumes:
+    - /:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
 
 volumes:
   grafana:

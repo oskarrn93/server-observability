@@ -44,3 +44,11 @@ resource "grafana_dashboard" "node_exporter" {
   config_json = data.local_file.grafana_dashboard_node_exporter.content
 }
 
+data "local_file" "grafana_dashboard_docker_containers" {
+  filename = "${path.module}/grafana/dashboards/docker-containers.json"
+}
+
+resource "grafana_dashboard" "docker_containers" {
+  config_json = data.local_file.grafana_dashboard_docker_containers.content
+}
+
