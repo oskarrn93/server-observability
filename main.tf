@@ -73,4 +73,12 @@ resource "grafana_dashboard" "docker_containers" {
   config_json = data.local_file.grafana_dashboard_docker_containers.content
 }
 
+data "local_file" "grafana_aws_route53_dyndns" {
+  filename = "${path.module}/grafana/dashboards/aws-route53-dyndns.json"
+}
+
+resource "grafana_dashboard" "aws_route53_dyndns" {
+  config_json = data.local_file.grafana_aws_route53_dyndns.content
+}
+
 

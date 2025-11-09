@@ -18,7 +18,7 @@ distributor:
     otlp:
       protocols:
         grpc:
-          endpoint: "tempo:4317"
+          endpoint: tempo:4317
 
 metrics_generator:
   registry:
