@@ -30,11 +30,11 @@ services:
   node_exporter:
     image: prom/node-exporter:v1.10.2
     container_name: node_exporter
+    restart: unless-stopped
     command:
       - '--path.rootfs=/host'
     network_mode: host
     pid: host
-    restart: unless-stopped
     volumes:
       - '/:/host:ro,rslave'
     ports:
@@ -43,6 +43,7 @@ services:
   cadvisor:
     image: gcr.io/cadvisor/cadvisor:v0.52.0
     container_name: cadvisor
+    restart: unless-stopped
     ports:
     - 8084:8080
     volumes:
@@ -54,6 +55,7 @@ services:
   loki:
     image: grafana/loki:3.5.8
     container_name: loki
+    restart: unless-stopped
     ports:
       - 3100:3100
     volumes:
@@ -62,12 +64,14 @@ services:
   promtail:
     image: grafana/promtail:3.5.8
     container_name: promtail
+    restart: unless-stopped
     volumes:
       - ./promtail-config.yaml:/etc/promtail/promtail-config.yaml
 
   tempo:
     image: grafana/tempo:2.9.0
     container_name: tempo
+    restart: unless-stopped
     command: [ "-config.file=/etc/tempo.yaml" ]
     volumes:
       - ./tempo.yaml:/etc/tempo.yaml
@@ -77,6 +81,7 @@ services:
   otel-collector:
     image: otel/opentelemetry-collector:0.139.0
     container_name: otel-collector
+    restart: unless-stopped
     command: [ "--config=/etc/otel-collector.yaml" ]
     volumes:
       - ./otel-collector.yaml:/etc/otel-collector.yaml
