@@ -79,7 +79,7 @@ services:
       - 4100:4100
 
   otel-collector:
-    image: otel/opentelemetry-collector:0.139.0
+    image: otel/opentelemetry-collector:0.146.1
     container_name: otel-collector
     restart: unless-stopped
     command: [ "--config=/etc/otel-collector.yaml" ]
