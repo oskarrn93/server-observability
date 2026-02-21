@@ -69,7 +69,7 @@ services:
       - ./promtail-config.yaml:/etc/promtail/promtail-config.yaml
 
   tempo:
-    image: grafana/tempo:2.9.0
+    image: grafana/tempo:2.10.1
     container_name: tempo
     restart: unless-stopped
     command: [ "-config.file=/etc/tempo.yaml" ]
