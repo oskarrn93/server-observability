@@ -62,7 +62,7 @@ services:
       - ./loki-config.yaml:/etc/loki/loki-config.yaml
       
   promtail:
-    image: grafana/promtail:3.6.7
+    image: grafana/promtail:3.6.8
     container_name: promtail
     restart: unless-stopped
     volumes:
